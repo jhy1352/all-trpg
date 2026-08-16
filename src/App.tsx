@@ -411,23 +411,18 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans selection:bg-amber-500 selection:text-black">
       {/* Top Header Bar */}
-      <header className="sticky top-0 z-30 bg-stone-900/90 border-b border-stone-800 backdrop-blur-md px-4 sm:px-6 py-3 flex items-center justify-between shadow-lg">
-        <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-md shadow-amber-500/20">
-            <span className="font-bold text-stone-950 text-base">TR</span>
+      <header className="sticky top-0 z-30 bg-stone-900/90 border-b border-stone-800 backdrop-blur-md px-3 sm:px-6 py-2.5 flex items-center justify-between shadow-lg">
+        <div className="flex items-center space-x-2.5">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-md shadow-amber-500/20">
+            <span className="font-bold text-stone-950 text-sm">TR</span>
           </div>
           <div>
-            <div className="flex items-center space-x-2">
-              <h1 className="font-bold text-sm sm:text-base text-stone-100 tracking-wide">
-                TRPG MASTER ENGINE
-              </h1>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-mono">
-                Rev 3.1 Final
-              </span>
-            </div>
+            <h1 className="font-bold text-xs sm:text-base text-stone-100 tracking-wide">
+              TRPG ENGINE
+            </h1>
             {gameState.phase === 'playing' && (
-              <p className="text-xs text-stone-400 font-medium">
-                {gameState.world.worldName} | 턴 {gameState.turnCount}
+              <p className="text-[11px] text-stone-400 font-medium truncate max-w-[140px] sm:max-w-none">
+                {gameState.world.worldName} · 턴 {gameState.turnCount}
               </p>
             )}
           </div>
@@ -439,38 +434,41 @@ export const App: React.FC = () => {
             <>
               <button
                 onClick={() => setShowWorldModal(true)}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition-colors border border-stone-700/60 shadow-sm"
+                className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition-colors border border-stone-700/60 shadow-sm flex items-center gap-1.5"
+                title="세계관 및 인물록"
               >
-                <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+                <BookOpen className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-amber-400" />
                 <span className="hidden sm:inline">세계관 & 인물록</span>
               </button>
 
               <button
                 onClick={() => setShowCharModal(true)}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition-colors border border-stone-700/60 shadow-sm"
+                className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition-colors border border-stone-700/60 shadow-sm flex items-center gap-1.5"
+                title="캐릭터 시트"
               >
-                <User className="w-3.5 h-3.5 text-amber-400" />
+                <User className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-amber-400" />
                 <span className="hidden sm:inline">캐릭터 시트</span>
               </button>
 
               <button
                 onClick={() => setShowDiceModal(true)}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition-colors border border-stone-700/60 shadow-sm"
+                className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition-colors border border-stone-700/60 shadow-sm flex items-center gap-1.5"
+                title="주사위 롤러"
               >
-                <Dices className="w-3.5 h-3.5 text-amber-400" />
-                <span className="hidden sm:inline">주사위 롤러</span>
+                <Dices className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-amber-400" />
+                <span className="hidden sm:inline">주사위</span>
               </button>
             </>
           )}
 
           <button
             onClick={() => setShowSyncModal(true)}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-semibold transition-colors border border-amber-500/40 shadow-sm"
+            className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-semibold transition-colors border border-amber-500/40 shadow-sm"
             title="클라우드 저장, 불러오기 및 세션 초기화"
           >
             <Cloud className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">세이브 · 동기화 · 초기화</span>
-            <span className="sm:hidden">동기화/초기화</span>
+            <span className="hidden sm:inline">동기화 · 초기화</span>
+            <span className="sm:hidden">동기화</span>
           </button>
 
           <button
