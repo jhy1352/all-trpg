@@ -44,6 +44,14 @@ export const WORLD_CHARACTER_POOLS: Record<string, CharacterPresetItem[]> = {
       appearance: '백의를 입고 술병을 든 채 세상만사를 관조하는 듯한 눈빛',
       goal: '천하를 주유하며 자신만의 궁극의 도법을 완성하는 것',
     },
+    {
+      name: '단목영',
+      title: '비영살수 (개심한 살수)',
+      age: 21,
+      gender: '여성',
+      appearance: '칠흑 같은 암살복에 비침을 숨긴 그림자 같은 자태',
+      goal: '암살 조직의 굴레를 끊어내고 햇빛 아래서 평범한 인간으로 살아가는 것',
+    },
   ],
   // 정통 판타지
   fantasy: [
@@ -79,8 +87,16 @@ export const WORLD_CHARACTER_POOLS: Record<string, CharacterPresetItem[]> = {
       appearance: '그림자 속에 숨어든 듯한 잿빛 망토와 예리한 비수를 숨긴 첩보원',
       goal: '왕국의 왕좌 뒤에 숨은 부패한 흑막의 음모를 폭로하는 것',
     },
+    {
+      name: '토르발 아이언하트',
+      title: '대장장이 룬 전사',
+      age: 35,
+      gender: '남성',
+      appearance: '거대한 강철 모루 문양의 방패와 전투망치를 든 단단한 드워프/용병',
+      goal: '선조의 성채를 함락시킨 고대 드래곤의 약점을 파헤치는 것',
+    },
   ],
-  // SF / 사이버펑크
+  // SF / 사이버펑크 / 스페이스 오페라
   scifi: [
     {
       name: '카일 V-09',
@@ -106,8 +122,24 @@ export const WORLD_CHARACTER_POOLS: Record<string, CharacterPresetItem[]> = {
       appearance: '중갑 방탄 조끼와 전자 펄스 라이플을 메고 턱에 흉터가 있는 거한',
       goal: '자신을 배신하고 버린 특수작전 사령부에 대가를 치르게 하는 것',
     },
+    {
+      name: '미라 첸',
+      title: '심우주 탐사정 파일럿',
+      age: 24,
+      gender: '여성',
+      appearance: '경량 우주 비행복과 홀로그램 헤드셋을 착용한 기민한 조종사',
+      goal: '성간 항로에서 실종된 부모님의 탐사선 잔해와 블랙박스를 회수하는 것',
+    },
+    {
+      name: '에이든 제로',
+      title: '안드로이드 방랑자',
+      age: 5,
+      gender: '기타',
+      appearance: '합금 골격 위에 인공 피부 코팅을 두른 정밀형 의체 소유자',
+      goal: '자신에게 탑재된 미지의 자아 알고리즘을 설계한 창조자를 찾는 것',
+    },
   ],
-  // 다크 판타지 / 아포칼립스 / 호러
+  // 다크 판타지 / 아포칼립스 / 크툴루 호러 / 생존
   dark: [
     {
       name: '카엘',
@@ -133,8 +165,16 @@ export const WORLD_CHARACTER_POOLS: Record<string, CharacterPresetItem[]> = {
       appearance: '차가운 가면과 은도금 철퇴를 든 광신적인 정화자',
       goal: '오염된 성역을 불태우고 인간성을 위협하는 악마적 존재를 멸절하는 것',
     },
+    {
+      name: '아서 펜들턴 박사',
+      title: '광기의 오컬트 고고학자',
+      age: 38,
+      gender: '남성',
+      appearance: '트렌치코트와 돋보기를 들고 이계의 속삭임에 불면증을 겪는 지식인',
+      goal: '심해의 유적에서 인류 문명을 멸망시킬 금기의 서판을 파괴하는 것',
+    },
   ],
-  // 애니 / JRPG / 현대
+  // 서브컬처 / JRPG / 현대 학원 / 이능력 / 성배전쟁
   janime: [
     {
       name: '시이나 렌',
@@ -160,6 +200,14 @@ export const WORLD_CHARACTER_POOLS: Record<string, CharacterPresetItem[]> = {
       appearance: '이세계의 가죽 갑옷과 현실의 후드티를 조합해 입은 모험가',
       goal: '미궁의 심층을 돌파하여 원래 세상으로 돌아가는 포털을 여는 것',
     },
+    {
+      name: '아마미야 쿠로코',
+      title: '괴도 마술사',
+      age: 18,
+      gender: '여성',
+      appearance: '세련된 정장 망토와 실크햇을 쓰고 도회적인 미소를 띤 소녀',
+      goal: '부패한 권력자들의 일그러진 마음의 핵을 훔쳐 세상의 부조리를 바로잡는 것',
+    },
   ],
 };
 
@@ -175,23 +223,39 @@ export function getRandomCharacterPresetForWorld(world: WorldInfoState): Charact
     name.includes('무협') ||
     premise.includes('강호') ||
     premise.includes('문파') ||
-    premise.includes('내공')
+    premise.includes('내공') ||
+    premise.includes('검객') ||
+    premise.includes('혈겁')
   ) {
     poolKey = 'wuxia';
   } else if (
     genre.includes('sf') ||
     genre.includes('사이버') ||
+    genre.includes('스페이스') ||
+    genre.includes('우주') ||
     name.includes('스페이스') ||
+    name.includes('사이버') ||
+    name.includes('목성') ||
+    name.includes('궤도') ||
     premise.includes('우주') ||
-    premise.includes('해커')
+    premise.includes('해커') ||
+    premise.includes('인공지능') ||
+    premise.includes('궤도') ||
+    premise.includes('함선')
   ) {
     poolKey = 'scifi';
   } else if (
     genre.includes('다크') ||
     genre.includes('아포') ||
     genre.includes('호러') ||
+    genre.includes('크툴루') ||
+    genre.includes('생존') ||
+    name.includes('다크') ||
+    name.includes('심연') ||
     premise.includes('생존') ||
-    premise.includes('저주')
+    premise.includes('저주') ||
+    premise.includes('멸망') ||
+    premise.includes('오염')
   ) {
     poolKey = 'dark';
   } else if (
@@ -199,7 +263,13 @@ export function getRandomCharacterPresetForWorld(world: WorldInfoState): Charact
     genre.includes('학원') ||
     genre.includes('이능') ||
     genre.includes('jrpg') ||
-    premise.includes('이세계')
+    genre.includes('서브컬처') ||
+    name.includes('도쿄') ||
+    name.includes('이세계') ||
+    premise.includes('이세계') ||
+    premise.includes('퇴마') ||
+    premise.includes('헌터') ||
+    premise.includes('페르소나')
   ) {
     poolKey = 'janime';
   }

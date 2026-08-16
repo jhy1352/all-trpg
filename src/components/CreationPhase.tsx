@@ -64,15 +64,17 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
   }, [world.worldName, world.worldGenre, world.worldPremise, world.worldMode]);
 
   // Phase 3 Character State & Stat Mode
+  const initialCharPreset = getRandomCharacterPresetForWorld(world);
   const [statInputMode, setStatInputMode] = useState<'dice' | 'manual'>('dice');
-  const [charName, setCharName] = useState(character.name || '무명 협객');
-  const [charTitle, setCharTitle] = useState(character.title || '초출강호');
-  const [charAge, setCharAge] = useState<number | string>(character.age || 20);
-  const [charGender, setCharGender] = useState(character.gender || '남성');
-  const [charAppearance, setCharAppearance] = useState(character.appearance || '검은 포말을 두르고 날카로운 눈빛을 지닌 청년');
+  const [charName, setCharName] = useState(character.name || initialCharPreset.name);
+  const [charTitle, setCharTitle] = useState(character.title || initialCharPreset.title);
+  const [charAge, setCharAge] = useState<number | string>(character.age || initialCharPreset.age);
+  const [charGender, setCharGender] = useState(character.gender || initialCharPreset.gender);
+  const [charAppearance, setCharAppearance] = useState(character.appearance || initialCharPreset.appearance);
   const [charBiography, setCharBiography] = useState(character.biography || '');
-  const [charGoal, setCharGoal] = useState(character.currentGoal || '세상에 얽힌 진실을 밝혀내고 살아남는 것');
+  const [charGoal, setCharGoal] = useState(character.currentGoal || initialCharPreset.goal);
   const [stats, setStats] = useState(character.stats);
+  const [hasCustomizedChar, setHasCustomizedChar] = useState(false);
 
   // Initialize 10 Presets on Category Change or Mount
   useEffect(() => {
@@ -91,14 +93,35 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
   const applyGenrePresetToWorld = (preset: GenrePreset) => {
     const matchedTone = TONE_AND_MANNER_CATALOG.find(t => t.id === preset.recommendedToneId) || TONE_AND_MANNER_CATALOG[0];
     setSelectedTone(matchedTone);
-    onUpdateWorld({
+    const updatedWorld: WorldInfoState = {
       ...world,
       worldMode: 'popular_genre',
       worldName: preset.name,
       worldGenre: preset.period,
       worldPremise: preset.premise,
       toneAndManner: matchedTone,
-    });
+    };
+    onUpdateWorld(updatedWorld);
+
+    // If user hasn't explicitly edited custom character details, sync character preset to new world
+    if (!hasCustomizedChar) {
+      const tailoredChar = getRandomCharacterPresetForWorld(updatedWorld);
+      setCharName(tailoredChar.name);
+      setCharTitle(tailoredChar.title);
+      setCharAge(tailoredChar.age);
+      setCharGender(tailoredChar.gender);
+      setCharAppearance(tailoredChar.appearance);
+      setCharGoal(tailoredChar.goal);
+      onUpdateCharacter({
+        ...character,
+        name: tailoredChar.name,
+        title: tailoredChar.title,
+        age: tailoredChar.age,
+        gender: tailoredChar.gender,
+        appearance: tailoredChar.appearance,
+        currentGoal: tailoredChar.goal,
+      });
+    }
   };
 
   const handleSelectGenrePreset = (preset: GenrePreset) => {
@@ -671,7 +694,10 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
                 <input
                   type="text"
                   value={charName}
-                  onChange={(e) => setCharName(e.target.value)}
+                  onChange={(e) => {
+                    setCharName(e.target.value);
+                    setHasCustomizedChar(true);
+                  }}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-100 focus:outline-none focus:border-amber-500"
                 />
               </div>
@@ -680,7 +706,10 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
                 <input
                   type="text"
                   value={charTitle}
-                  onChange={(e) => setCharTitle(e.target.value)}
+                  onChange={(e) => {
+                    setCharTitle(e.target.value);
+                    setHasCustomizedChar(true);
+                  }}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-100 focus:outline-none focus:border-amber-500"
                 />
               </div>
@@ -689,7 +718,10 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
                 <input
                   type="number"
                   value={charAge}
-                  onChange={(e) => setCharAge(Number(e.target.value))}
+                  onChange={(e) => {
+                    setCharAge(Number(e.target.value));
+                    setHasCustomizedChar(true);
+                  }}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-100 focus:outline-none focus:border-amber-500"
                 />
               </div>
@@ -697,7 +729,10 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
                 <label className="text-[11px] font-semibold text-stone-300">성별</label>
                 <select
                   value={charGender}
-                  onChange={(e) => setCharGender(e.target.value)}
+                  onChange={(e) => {
+                    setCharGender(e.target.value);
+                    setHasCustomizedChar(true);
+                  }}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-100 focus:outline-none focus:border-amber-500"
                 >
                   <option value="남성">남성</option>
@@ -714,7 +749,10 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
                 <input
                   type="text"
                   value={charAppearance}
-                  onChange={(e) => setCharAppearance(e.target.value)}
+                  onChange={(e) => {
+                    setCharAppearance(e.target.value);
+                    setHasCustomizedChar(true);
+                  }}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-100 focus:outline-none focus:border-amber-500"
                 />
               </div>
@@ -723,7 +761,10 @@ export const CreationPhase: React.FC<CreationPhaseProps> = ({
                 <input
                   type="text"
                   value={charGoal}
-                  onChange={(e) => setCharGoal(e.target.value)}
+                  onChange={(e) => {
+                    setCharGoal(e.target.value);
+                    setHasCustomizedChar(true);
+                  }}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-stone-100 focus:outline-none focus:border-amber-500"
                 />
               </div>
