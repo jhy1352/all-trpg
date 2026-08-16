@@ -1,0 +1,6 @@
+{
+  "name": "High-Fidelity TRPG Engine & Web Player",
+  "description": "Cross-platform TRPG Engine with Master GM system instructions, CSPRNG dice roller, dynamic 14th block metadata parser, 15-turn auto-save & 6-digit sync code.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
